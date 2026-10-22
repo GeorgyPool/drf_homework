@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "users",
     "rest_framework",
     "material",
+    "home",
 ]
 
 MIDDLEWARE = [
