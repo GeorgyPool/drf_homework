@@ -14,7 +14,7 @@ class СourseViewSet(viewsets.ModelViewSet):
 
 
 """
-Представления для класса Lesson API endpoint в формате CRUD
+Представления для класса Lesson API endpoint в формате CRUD generics
 """
 
 
