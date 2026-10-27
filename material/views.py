@@ -1,7 +1,7 @@
 from rest_framework import generics, viewsets
 
 from material.models import Lesson, Course
-from material.serializers import LessonSerializer, СourseSerializer
+from material.serializers import LessonSerializer, CourseSerializer
 
 """
 Представление для Сourse API endpoint в формате ViewSet
@@ -9,7 +9,7 @@ from material.serializers import LessonSerializer, СourseSerializer
 
 
 class CourseViewSet(viewsets.ModelViewSet):
-    serializer_class = СourseSerializer
+    serializer_class = CourseSerializer
     queryset = Course.objects.all()
 
 
