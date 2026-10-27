@@ -20,9 +20,13 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
+from home.apps import HomeConfig
+from material.apps import MaterialConfig
 from users.apps import UsersConfig
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("", include("home.urls", namespace=HomeConfig.name)),
+    path("material/", include("material.urls", namespace=MaterialConfig.name)),
     path("users/", include("users.urls", namespace=UsersConfig.name)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
