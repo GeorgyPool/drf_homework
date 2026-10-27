@@ -1,6 +1,6 @@
 from rest_framework import generics, viewsets
 
-from material.models import Lesson, Сourse
+from material.models import Lesson, Course
 from material.serializers import LessonSerializer, СourseSerializer
 
 """
@@ -8,9 +8,9 @@ from material.serializers import LessonSerializer, СourseSerializer
 """
 
 
-class СourseViewSet(viewsets.ModelViewSet):
+class CourseViewSet(viewsets.ModelViewSet):
     serializer_class = СourseSerializer
-    queryset = Сourse.objects.all()
+    queryset = Course.objects.all()
 
 
 """
