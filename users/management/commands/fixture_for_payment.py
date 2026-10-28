@@ -55,8 +55,8 @@ class Command(BaseCommand):
             )
             self.stdout.write(self.style.SUCCESS("Курсы и уроки успешно созданы"))
 
-        except IntegrityError as e:
-            self.stdout.write(self.style.WARNING(f"Ошибка {e}"))
+        except Exception as e:
+            self.stdout.write(self.style.WARNING(f"Ошибка {type(e)}"))
 
         try:
             Payment.objects.create(
@@ -74,5 +74,5 @@ class Command(BaseCommand):
             )
 
             self.stdout.write(self.style.SUCCESS("Платеж успешно создан"))
-        except IntegrityError:
-            self.stdout.write(self.style.WARNING("Уже создано"))
+        except Exception as e:
+            self.stdout.write(self.style.WARNING(f"Ошибка {type(e)}"))
