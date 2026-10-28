@@ -14,7 +14,7 @@ class User(AbstractBaseUser):
     city = models.CharField(
         max_length=150, blank=True, null=True, verbose_name="Ваш город"
     )
-    avatar = models.ImageField(upload_to="users/avatar/")
+    avatar = models.ImageField(upload_to="users/avatar/", blank=True, null=True)
 
     USERNAME_FIELD = "email"
 
