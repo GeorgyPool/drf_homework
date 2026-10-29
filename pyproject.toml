@@ -13,7 +13,8 @@ dependencies = [
     "pillow (>=13.0.0,<14.0.0)",
     "djangorestframework (>=3.18.3,<4.0.0)",
     "shell (>=1.0.1,<2.0.0)",
-    "ipython (>=9.17.1,<10.0.0)"
+    "ipython (>=9.17.1,<10.0.0)",
+    "django-filter (>=26.2,<27.0)"
 ]
 
 

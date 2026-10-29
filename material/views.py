@@ -1,7 +1,7 @@
 from rest_framework import generics, viewsets
 
-from material.models import Lesson, Course
-from material.serializers import LessonSerializer, CourseSerializer
+from material.models import Course, Lesson
+from material.serializers import CourseSerializer, LessonSerializer
 
 """
 Представление для Сourse API endpoint в формате ViewSet
