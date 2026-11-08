@@ -56,3 +56,23 @@ class Payment(models.Model):
 
     def __str__(self):
         return f"{self.course if self.course else self.lesson}"
+
+
+class Subscription(models.Model):
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="sub_user",
+        verbose_name="Пользователь",
+        blank=True,
+        null=True,
+    )
+    course = models.ForeignKey(
+        Course,
+        related_name="sub_course",
+        on_delete=models.DO_NOTHING,
+        verbose_name="Курс",
+        blank=True,
+        null=True,
+    )
