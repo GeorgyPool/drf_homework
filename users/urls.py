@@ -11,6 +11,7 @@ app_name = UsersConfig.name
 
 router = DefaultRouter()
 router.register(r"options", views.UserViewSet, basename="options")
+router.register(r"subscriptions", views.UserSubscriptions, basename="subscriptions")
 
 urlpatterns = [
     path("token/", TokenObtainPairView.as_view(), name="register"),
