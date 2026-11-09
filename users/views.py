@@ -46,11 +46,6 @@ class UserSubscriptions(viewsets.ModelViewSet):
     serializer_class = SubscriptionSerializer
     permission_classes = [IsAuthenticated]
 
-    def get_permissions(self):
-        if self.action == "destroy":
-            self.permission_classes = [IsUser]
-        return super().get_permissions()
-
     def perform_create(self, serializer):
 
         user = self.request.user
