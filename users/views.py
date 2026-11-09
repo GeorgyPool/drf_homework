@@ -49,7 +49,7 @@ class UserSubscriptions(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action == "destroy":
             self.permission_classes = [IsUser]
-            return super().get_permissions()
+        return super().get_permissions()
 
     def perform_create(self, serializer):
 
