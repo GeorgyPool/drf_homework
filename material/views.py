@@ -54,14 +54,6 @@ class LessonReadAPIView(generics.ListAPIView):
     pagination_class = LessonListPaginator
     permission_classes = [IsAuthenticated, IsModer | IsOwner]
 
-    def list(self, request, *args, **kwargs):
-        user = self.request.user
-
-        if not user.groups.filter(name="moderators").exists():
-            self.queryset = self.queryset.filter(owner=user)
-
-        return super().list(request, *args, **kwargs)
-
 
 class LessonRetrieveAPIView(generics.RetrieveAPIView):
     serializer_class = LessonSerializer
