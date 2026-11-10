@@ -13,6 +13,7 @@ class TestLessons(APITestCase):
 
         # создание тестового пользователя и тестового курса
         self.user_owner = User.objects.create(email="user_owner@example.com")
+        self.other_user = User.objects.create(email="other_user@example.com")
         self.test_course = Course.objects.create(title="test", owner=self.user_owner)
 
         # создание тестового урока
@@ -56,6 +57,13 @@ class TestLessons(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json().get("title"), "test_update")
         self.assertEqual(response.json().get("owner"), self.user_owner.pk)
+
+    def test_bad_delete_lesson(self):
+        self.client.force_authenticate(user=self.other_user)
+        response = self.client.delete(f"/material/lesson/delete/{self.test_lesson.pk}/")
+        self.assertEqual(response.json().get("detail"), "У вас недостаточно прав для выполнения данного действия.")
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
 
     def test_delete_lesson(self):
         self.client.force_authenticate(user=self.user_owner)
