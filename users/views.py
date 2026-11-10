@@ -6,7 +6,7 @@ from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from users.models import Payment, Subscription, User
-from users.permissions import IsModer, IsUser
+from users.permissions import IsModer, IsUser, IsOwnerSubscribe
 from users.serializers import (PaymentSerializer, SubscriptionSerializer,
                                UserSerializer)
 
@@ -45,6 +45,11 @@ class UserSubscriptions(viewsets.ModelViewSet):
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        if self.action == "destroy":
+            self.permission_classes = [IsOwnerSubscribe]
+        return super().get_permissions()
 
     def perform_create(self, serializer):
 
