@@ -61,9 +61,11 @@ class TestLessons(APITestCase):
     def test_bad_delete_lesson(self):
         self.client.force_authenticate(user=self.other_user)
         response = self.client.delete(f"/material/lesson/delete/{self.test_lesson.pk}/")
-        self.assertEqual(response.json().get("detail"), "У вас недостаточно прав для выполнения данного действия.")
+        self.assertEqual(
+            response.json().get("detail"),
+            "У вас недостаточно прав для выполнения данного действия.",
+        )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-
 
     def test_delete_lesson(self):
         self.client.force_authenticate(user=self.user_owner)
