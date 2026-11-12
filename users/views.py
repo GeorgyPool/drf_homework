@@ -6,7 +6,7 @@ from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from users.models import Payment, Subscription, User
-from users.permissions import IsModer, IsUser, IsOwnerSubscribe
+from users.permissions import IsModer, IsOwnerSubscribe, IsUser
 from users.serializers import (PaymentSerializer, SubscriptionSerializer,
                                UserSerializer)
 
