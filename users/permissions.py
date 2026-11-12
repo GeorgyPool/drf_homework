@@ -17,3 +17,8 @@ class IsUser(BasePermission):
 
     def has_object_permission(self, request, view, obj):
         return obj.pk == request.user.pk
+
+class IsOwnerSubscribe(BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+        return obj.user == request.user
