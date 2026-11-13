@@ -61,17 +61,26 @@ class TestSubscription(APITestCase):
     def test_delete_subscribe_any_user(self):
         self.client.force_authenticate(user=self.test_second_user)
 
-        response = self.client.delete(f"/users/subscriptions/{self.test_first_subscribe.pk}/")
+        response = self.client.delete(
+            f"/users/subscriptions/{self.test_first_subscribe.pk}/"
+        )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-        self.assertEqual(response.json()["detail"], "У вас недостаточно прав для выполнения данного действия.")
+        self.assertEqual(
+            response.json()["detail"],
+            "У вас недостаточно прав для выполнения данного действия.",
+        )
 
     def test_delete_subscribe_for_user(self):
         self.client.force_authenticate(user=self.test_user)
 
-        response = self.client.delete(f"/users/subscriptions/{self.test_first_subscribe.pk}/")
+        response = self.client.delete(
+            f"/users/subscriptions/{self.test_first_subscribe.pk}/"
+        )
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
-        subscription = Subscription.objects.filter(user=self.test_user.pk, course=self.test_second_course.pk).exists()
+        subscription = Subscription.objects.filter(
+            user=self.test_user.pk, course=self.test_second_course.pk
+        ).exists()
         self.assertEqual(subscription, False)
 
     def tearDown(self):

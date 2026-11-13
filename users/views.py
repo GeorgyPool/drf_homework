@@ -6,9 +6,11 @@ from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from users.models import Payment, Subscription, User
-from users.permissions import IsModer, IsUser, IsOwnerSubscribe
+from users.permissions import IsModer, IsOwnerSubscribe, IsUser
 from users.serializers import (PaymentSerializer, SubscriptionSerializer,
                                UserSerializer)
+from users.services import (conver_rub_to_usd, create_stripe_price,
+                            crete_stripe_session)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -27,7 +29,6 @@ class UserViewSet(viewsets.ModelViewSet):
             self.permission_classes = [IsModer]
         elif self.action in ["retrieve", "update", "destroy"]:
             self.permission_classes = [IsUser]
-            pass
 
         return super().get_permissions()
 
@@ -39,6 +40,33 @@ class PaymentAPIList(generics.ListAPIView):
     filterset_fields = ["course_id", "lesson_id"]
     search_fields = ["course", "lesson", "payment_method"]
     ordering_fields = ["price", "created_at"]
+
+
+class PaymentAPICreate(generics.CreateAPIView):
+    serializer_class = PaymentSerializer
+
+    def perform_create(self, serializer):
+        course = serializer.validated_data.get("course")
+        lesson = serializer.validated_data.get("lesson")
+
+        if course is None and lesson is None:
+            raise ValidationError("Вы должны указать курс или урок")
+
+        material_price = course.price if course is not None else lesson.price
+
+        amount_in_dollar = conver_rub_to_usd(material_price)
+
+        price = create_stripe_price(amount_in_dollar)
+        session_id, link_payment = crete_stripe_session(price)
+
+        payment = serializer.save(
+            user=self.request.user,
+            price=amount_in_dollar,
+            course=course,
+            lesson=lesson,
+            session_id=session_id,
+            link_payment=link_payment,
+        )
 
 
 class UserSubscriptions(viewsets.ModelViewSet):

@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "home",
     "django_filters",
     "rest_framework_simplejwt",
+    "drf_yasg",
 ]
 
 MIDDLEWARE = [
@@ -139,3 +140,6 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
+
+SECRET_STRIPE_API_KEY = os.getenv("SECRET_STRIPE_API_KEY")
+SECRET_CURRENCY_API_KEY = os.getenv("SECRET_CURRENCY_API_KEY")
