@@ -17,6 +17,8 @@ class Course(models.Model):
         blank=True,
     )
 
+    price = models.PositiveIntegerField(verbose_name="Цена", default=1000)
+
     def __str__(self):
         return self.title
 
@@ -43,6 +45,8 @@ class Lesson(models.Model):
         null=True,
         blank=True,
     )
+
+    price = models.PositiveIntegerField(verbose_name="Цена", default=1000)
 
     def __str__(self):
         return self.title

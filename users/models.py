@@ -54,8 +54,20 @@ class Payment(models.Model):
         max_length=20, choices=PAYMENT_CHOICES, verbose_name="Метод оплаты"
     )
 
+    session_id = models.CharField(
+        max_length=250, blank=True, null=True, verbose_name="Номер сессии"
+    )
+
+    link_payment = models.URLField(
+        max_length=1000, blank=True, null=True, verbose_name="Ссылка на оплату"
+    )
+
     def __str__(self):
         return f"{self.course if self.course else self.lesson}"
+
+    class Meta:
+        verbose_name = "Платеж"
+        verbose_name_plural = "Платежи"
 
 
 class Subscription(models.Model):

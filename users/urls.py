@@ -17,4 +17,5 @@ urlpatterns = [
     path("token/", TokenObtainPairView.as_view(), name="register"),
     path("refresh/token/", TokenRefreshView.as_view(), name="refresh_token"),
     path("payment/list/", views.PaymentAPIList.as_view(), name="payment_list"),
+    path("payment/create/", views.PaymentAPICreate.as_view(), name="payment_create"),
 ] + router.urls
