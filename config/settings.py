@@ -157,6 +157,12 @@ CELERY_RESULT_BACKEND = "redis://localhost:6379"
 CELERY_TIMEZONE = TIME_ZONE
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_BEAT_SCHEDULE = {
+    "check_login_time": {
+        "task": "users.tasks.check_login_time",
+        "schedule": timedelta(minutes=1),
+    },
+}
 
 EMAIL_HOST = os.getenv("EMAIL_HOST")
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
