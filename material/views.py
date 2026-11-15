@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from material.models import Course, Lesson
 from material.paginations import CourseListPaginator, LessonListPaginator
 from material.serializers import CourseSerializer, LessonSerializer
+from material.tasks import send_message_for_update_material_course
 from users.models import Subscription
 from users.permissions import IsModer, IsOwner
 
@@ -46,6 +47,10 @@ class LessonCreateAPIView(generics.CreateAPIView):
         lesson = serializer.save()
         lesson.owner = self.request.user
         lesson.save()
+
+        # при добавлении нового урока в курс,
+        # при наличии у пользователя подписки на данный курс ему отправляется сообщение на почту о новом уроке
+        send_message_for_update_material_course.delay(lesson.course_id, lesson.title)
 
 
 class LessonReadAPIView(generics.ListAPIView):
